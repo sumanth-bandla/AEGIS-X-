@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AEGIS X 2.0 – AI Investigation Agent</title>
+<style>
+:root{--bg:#050d1d;--panel:#0a1730;--panel2:#0d1d3d;--line:#16305a;--tx:#e6eefc;--mut:#8aa0c4;--blue:#2f7bff;--cyan:#19c8d8;--green:#2fd18b;--amber:#f0a62b;--red:#ef4455;--purple:#8b5cf6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 30% -10%,#0b2150,var(--bg));color:var(--tx);font:13px/1.45 Inter,"Segoe UI",system-ui,sans-serif;min-height:100vh}
+.app{display:grid;grid-template-columns:250px 1fr 330px;gap:0;min-height:100vh}
+aside.nav{background:#06122a;border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:6px}
+.logo{display:flex;gap:10px;align-items:center;padding:0 6px 16px}
+.logo b{font-size:24px;letter-spacing:1px}.logo b i{font-style:normal;color:var(--mut);font-weight:400}
+.logo small{display:block;color:var(--cyan);font-size:12px}
+.shield{width:38px;height:42px;border:2px solid var(--blue);border-radius:6px 6px 18px 18px;display:grid;place-items:center;color:var(--cyan);font-size:18px}
+.nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#c9d6ee;cursor:pointer;text-decoration:none}
+.nav a:hover{background:#0c1f44}.nav a.on{background:#10316a;color:#fff}
+.nav a em{margin-left:auto;background:var(--red);color:#fff;border-radius:99px;padding:0 6px;font-style:normal;font-size:11px}
+.nav a u{text-decoration:none;font-size:10px;margin-left:auto;padding:1px 6px;border-radius:4px;background:#12335f;color:var(--cyan)}
+.tag{margin-top:auto;color:var(--mut);font-size:15px;padding:20px 8px}.tag b{color:var(--cyan);font-weight:500}
+.pw{padding:12px 8px;border-top:1px solid var(--line);color:var(--mut);font-size:11px}.pw b{color:#76b900;font-size:14px}
+main{padding:14px 16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.file{display:flex;gap:10px;align-items:center}.file b{font-size:15px}.file small{color:var(--mut);display:block}
+.ok{border:1px solid #1b6b55;background:#0a2a2c;color:var(--green);padding:6px 12px;border-radius:10px;font-size:12px}
+.user{margin-left:auto;display:flex;gap:12px;align-items:center;color:var(--mut);font-size:12px}
+.av{width:30px;height:30px;border-radius:50%;background:var(--blue);display:grid;place-items:center;color:#fff;font-weight:700}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:12px;padding:14px}
+.card h3{font-size:14px;margin-bottom:2px}.card .sub{color:var(--mut);font-size:11px;margin-bottom:10px}
+.hero{display:flex;justify-content:space-between;align-items:center;min-height:100px;background:linear-gradient(90deg,#0b1f45,#07162f 55%,#0b2a52)}
+.hero h1{font-size:23px;margin-bottom:6px}.hero p{color:#c3d1ea;max-width:470px}.hero q{color:var(--mut);font-style:italic;max-width:170px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{display:flex;gap:12px;align-items:center}.ic{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:20px}
+.kpi small{color:#c3d1ea}.kpi .v{font-size:26px;font-weight:700}.kpi .d{margin-left:auto;font-size:12px}
+.row3{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:12px}
+.row2{display:grid;grid-template-columns:1.5fr 1fr;gap:12px}
+.row2b{display:grid;grid-template-columns:1.05fr 1fr;gap:12px}
+.bar{display:grid;grid-template-columns:90px 1fr 56px;gap:8px;align-items:center;margin:8px 0}
+.bar div.t{background:#0a1530;height:18px;border-radius:3px}.bar div.t i{display:block;height:100%;border-radius:3px}
+.donutw{display:flex;gap:14px;align-items:center}
+.donut{--p:0;width:116px;height:116px;border-radius:50%;display:grid;place-items:center;flex:none}
+.donut div{width:70px;height:70px;background:var(--panel);border-radius:50%;display:grid;place-items:center;text-align:center;font-size:10px;line-height:1.2}
+.donut b{font-size:20px;display:block}
+.leg div{display:flex;align-items:center;gap:7px;margin:5px 0;font-size:12px}.leg i{width:9px;height:9px;border-radius:50%}.leg span{margin-left:auto;padding-left:14px}
+table{width:100%;border-collapse:collapse}th{color:#c3d1ea;text-align:left;font-weight:500;padding:6px;border-bottom:1px solid var(--line)}
+td{padding:8px 6px;border-bottom:1px solid #10264a}tr.f{cursor:pointer}tr.f:hover,tr.f.sel{background:#0d2350}
+.id{display:inline-block;padding:2px 7px;border-radius:4px;font-weight:700;color:#fff;font-size:11px}
+.sev{display:inline-block;min-width:60px;text-align:center;border-radius:4px;padding:1px 6px;font-size:11px}
+.Low{background:#1d5a45;color:#b9f5dc}.Medium{background:#8a5a14;color:#ffe2a6}.High{background:#8f1f2e;color:#ffd0d6}
+.link{color:var(--cyan);cursor:pointer}
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qa button{background:#0a1a3a;border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:10px;text-align:left;cursor:pointer;font:inherit}
+.qa button:hover{border-color:var(--blue)}.qa small{display:block;color:var(--mut);font-size:10px}
+.tabs{display:flex;gap:2px;margin:-14px -14px 10px}.tabs span{padding:8px 14px;background:#0a1a3a;color:var(--mut)}.tabs span.on{background:#12335f;color:#fff;border-bottom:2px solid var(--blue)}
+.ev{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
+.eg{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.n{border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:11px;background:#0a1a3a}
+.n.f{border-color:var(--red);background:#2b0f1e}.n.c{border-color:var(--purple);background:#1a1240}.n.r{border-color:var(--green);background:#0b2a26}.n.k{border-color:var(--blue);background:#0b2a66}
+.ar{color:var(--mut)}
+.evb{background:#0a1a3a;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12px}
+.evb p{margin:4px 0;color:#c3d1ea}.evb b{color:var(--cyan);font-weight:500}
+aside.cop{border-left:1px solid var(--line);background:#06122a;padding:12px;display:flex;flex-direction:column;gap:12px}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 330px);min-height:420px}
+.msgs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px}
+.m{padding:10px 12px;border-radius:10px;max-width:92%;white-space:pre-wrap}.m.u{align-self:flex-end;background:#1766d1}.m.a{background:#0d1f45;border:1px solid var(--line)}
+.inp{display:flex;border:1px solid var(--line);border-radius:10px;padding:6px;background:#081a38}
+.inp input{flex:1;background:none;border:0;color:var(--tx);font:inherit;padding:8px;outline:0}
+.inp button{background:#1d4d99;border:0;color:#fff;border-radius:8px;padding:0 12px;cursor:pointer}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{background:none;border:1px solid var(--line);color:var(--tx);border-radius:99px;padding:6px 11px;cursor:pointer;font:inherit;font-size:12px}
+.chips button:hover{border-color:var(--cyan)}
+.dp div{display:flex;justify-content:space-between;padding:7px 0;color:#c3d1ea}.dp span{color:var(--tx)}
+footer{color:var(--mut);font-size:11px;display:flex;justify-content:space-between;padding:4px 2px}
+@media(max-width:1250px){.app{grid-template-columns:230px 1fr}aside.cop{grid-column:1/-1;border-left:0}}
+@media(max-width:850px){.app{grid-template-columns:1fr}aside.nav{flex-direction:row;flex-wrap:wrap}.tag,.pw{display:none}.kpis,.row3,.row2,.row2b,.ev{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="nav">
+ <div class="logo"><div class="shield">◆</div><div><b>AEGIS X <i>2.0</i></b><small>AI Investigation Agent</small></div></div>
+ <a class="on" data-go="top">⌂ Dashboard</a>
+ <a id="upBtn">⇪ Upload Dataset</a>
+ <a data-go="dq">◍ Data Profile</a>
+ <a data-go="findings">▤ Findings <em id="navCount">0</em></a>
+ <a data-go="evidence">▦ Evidence Explorer</a>
+ <a data-go="evidence">⌬ Investigation Graph</a>
+ <a data-go="copilot">☺ AI Copilot <u>New</u></a>
+ <a id="repBtn">▥ Reports</a>
+ <a id="cmpBtn">▣ Dataset Comparison <u>Beta</u></a>
+ <a data-go="top">⚙ Settings</a>
+ <div class="tag">Data tells you what<br>happened. <b>AEGIS X</b> tells you<br><b>why it matters.</b></div>
+ <div class="pw">Powered by<br><b>NVIDIA</b> &nbsp;|&nbsp; Nebius</div>
+</aside>
+
+<main id="top">
+ <div class="top">
+  <div class="file"><div class="ic" style="background:#12335f;width:38px;height:38px">▤</div><div><b id="fname">—</b><small id="fmeta"></small></div></div>
+  <div class="ok">✓ Analysis Complete <small id="ftime" style="color:var(--mut);display:block"></small></div>
+  <div class="user"><span id="model"><b style="color:#76b900">●</b> Checking model…</span><div class="av">S</div><span style="color:var(--tx);font-size:14px">Sumanth</span></div>
+ </div>
+ <div class="card hero"><div><h1>Welcome to AEGIS X 2.0</h1><p>Your AI-powered investigation platform. Upload data, explore insights, find anomalies, and get evidence-backed answers.</p></div><q>“From raw data to trusted insights.”</q></div>
+ <div class="kpis" id="kpis"></div>
+ <div class="row3">
+  <div class="card"><h3>Sales Trend</h3><div class="sub">Total Sales Amount by Date</div><svg id="trend" viewBox="0 0 400 190" width="100%"></svg></div>
+  <div class="card"><h3>Top Products by Sales</h3><div id="prod"></div></div>
+  <div class="card"><h3>Sales by Region</h3><div class="donutw"><div class="donut" id="regD"><div><span><b id="regN">0</b>Total Records</span></div></div><div class="leg" id="regL"></div></div></div>
+ </div>
+ <div class="row2b" id="findings">
+  <div class="card"><div style="display:flex;justify-content:space-between"><h3>Recent Findings</h3><span class="link" id="expBtn">Export ⤓</span></div>
+   <table><thead><tr><th>ID</th><th>Title</th><th>Category</th><th>Severity</th><th>Evidence</th></tr></thead><tbody id="ftab"></tbody></table></div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+   <div class="card" id="dq"><h3>Data Quality Overview</h3><div class="donutw" style="margin-top:10px"><div class="donut" id="dqD"><div><span><b id="dqN">0</b>Issues</span></div></div><div class="leg" id="dqL"></div></div></div>
+   <div class="card"><h3>Quick Actions</h3><div class="qa" style="margin-top:8px">
+    <button id="qa1">View Full Report<small>Generate detailed report</small></button>
+    <button id="qa2">Export Findings<small>CSV / Markdown</small></button>
+    <button id="qa3">Ask AI<small>Query your data</small></button>
+    <button id="qa4">Upload New Dataset<small>Analyze another file</small></button></div></div>
+  </div>
+ </div>
+ <div class="card" id="evidence"><div class="tabs"><span class="on">Evidence Graph</span><span>Investigation Graph</span></div>
+  <div class="ev"><div class="eg" id="graph"></div><div class="evb" id="evb"></div></div></div>
+ <footer><span>AEGIS X 2.0 &nbsp;|&nbsp; Evidence &nbsp; Analytics &nbsp; AI &nbsp; Trust</span><span>Built for a safer, smarter tomorrow.</span></footer>
+</main>
+
+<aside class="cop" id="copilot">
+ <div class="card chat"><div style="display:flex;justify-content:space-between"><b>AI Copilot</b><span id="prov" style="color:var(--cyan);font-size:11px">Local engine</span></div>
+  <div class="msgs" id="msgs"></div>
+  <div class="inp"><input id="q" placeholder="Ask a question about your data..."><button id="send">➤</button></div>
+  <div class="chips"><button>Summarize findings</button><button>Explain a finding</button><button>Compare products</button></div></div>
+ <div class="card dp"><div style="display:flex;justify-content:space-between"><b>Dataset Profile</b><span class="link" data-go="dq">View Details</span></div>
+  <div>Name<span id="pN"></span></div><div>Rows<span id="pR"></span></div><div>Columns<span id="pC"></span></div><div>File Size<span id="pS"></span></div><div>Fingerprint<span id="pF"></span></div><div>Uploaded<span id="pU"></span></div></div>
+</aside>
+</div>
+<input type="file" id="file" accept=".csv" hidden>
+
+<script>
+/* ---------- state ---------- */
+const S={name:'',size:0,rows:[],cols:[],F:[],sel:0,stamp:'',fp:''};
+const $=id=>document.getElementById(id);
+const COL={F001:'#2f7bff',Low:'#2f7bff',Medium:'#f0a62b',High:'#ef4455'};
+const fmt=n=>Number(n).toLocaleString('en-IN',{maximumFractionDigits:2});
+
+/* ---------- sample data (51 rows, seeded, with planted issues) ---------- */
+function sample(){
+ let s=7;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+ const P=[['Laptop',900],['Phone',600],['Headphones',80],['Tablet',350],['Accessories',25]];
+ const R=['North','South','East','West','Central'],C=['Asha','Ravi','Meena','Kiran','Latha','Vijay'];
+ let L=['OrderID,Date,Customer,Product,Category,Region,Quantity,Unit Price,Sales Total,Salesperson'];
+ for(let i=0;i<51;i++){
+  const p=P[Math.floor(r()*5)],q=1+Math.floor(r()*5),d=new Date(2025,0,1+i);
+  const row=[1000+i,d.toISOString().slice(0,10),C[i%6],p[0],i%2?'Electronics':'Accessories',R[Math.floor(r()*5)],q,p[1],q*p[1],'Rep'+(i%4+1)];
+  L.push(row.join(','));
+ }
+ L=L.map(x=>x.split(','));
+ L[12][7]='';                         // missing unit price
+ L[30]=L[29].slice();                 // exact duplicate row
+ L[20][8]=String(+L[20][6]*+L[20][7]+777); // inconsistent total
+ L[25][6]='-2';L[25][8]=String(-2*+L[25][7]); // negative qty
+ L[40][3]='Accessories';L[40][6]='100';L[40][7]='20';L[40][8]='2000'; // huge qty
+ L[45][3]='Laptop';L[45][6]='2';L[45][7]='25000';L[45][8]='50000'; // outlier amount
+ return L.map(x=>x.join(',')).join('\n');
+}
+
+/* ---------- csv ---------- */
+function parseCSV(t){
+ const out=[];let row=[],f='',q=false;
+ for(let i=0;i<t.length;i++){const c=t[i];
+  if(q){if(c=='"'&&t[i+1]=='"'){f+='"';i++}else if(c=='"')q=false;else f+=c}
+  else if(c=='"')q=true;else if(c==','){row.push(f);f=''}
+  else if(c=='\n'||c=='\r'){if(c=='\r'&&t[i+1]=='\n')i++;row.push(f);out.push(row);row=[];f=''}
+  else f+=c}
+ if(f!==''||row.length){row.push(f);out.push(row)}
+ return out.filter(r=>r.some(x=>x.trim()!==''));
+}
+function load(text,name){
+ const g=parseCSV(text);S.cols=g[0].map(s=>s.trim());
+ S.rows=g.slice(1).map(r=>Object.fromEntries(S.cols.map((c,i)=>[c,(r[i]??'').trim()])));
+ S.name=name;S.size=new Blob([text]).size;
+ let h=0;for(let i=0;i<text.length;i++)h=(h*31+text.charCodeAt(i))>>>0;
+ S.fp=h.toString(16).padStart(8,'0')+'c4d6…';
+ const d=new Date();S.stamp=d.toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+ analyze();render();
+ $('msgs').innerHTML='';ai(summary());
+}
+
+/* ---------- analysis engine ---------- */
+const num=v=>v===''||v==null||isNaN(+v)?NaN:+v;
+const find=re=>S.cols.find(c=>re.test(c));
+function quart(a){a=[...a].sort((x,y)=>x-y);const q=p=>a[Math.floor((a.length-1)*p)];return[q(.25),q(.75)]}
+function analyze(){
+ const F=[],R=S.rows,n=R.length;
+ const cQ=find(/qty|quantity/i),cP=find(/price/i),cT=find(/total|amount|sales/i);
+ const add=(title,cat,sev,rows,cols,method,thr,detail)=>F.push({id:'F'+String(F.length+1).padStart(3,'0'),title,cat,sev,rows,cols,method,thr,detail});
+ // missing
+ S.cols.forEach(c=>{const rs=R.map((r,i)=>r[c]===''?i:-1).filter(i=>i>=0);
+  if(rs.length)add(`Missing values in ${c}`,'Data Quality',rs.length/n>.05?'Medium':'Low',rs,[c],'Null value detection','> 0 missing values',`The ${c} column has ${rs.length} missing value${rs.length>1?'s':''} (${(rs.length/n*100).toFixed(2)}% of total records).`)});
+ // duplicates
+ const seen={},dup=[];R.forEach((r,i)=>{const k=JSON.stringify(Object.values(r));if(seen[k]!==undefined)dup.push(i);else seen[k]=i});
+ if(dup.length)add('Duplicate records detected','Data Quality','Medium',dup,S.cols,'Exact row match','> 0 identical rows',`${dup.length} record(s) exactly duplicate an earlier row.`);
+ // business rule
+ if(cQ&&cP&&cT){
+  const bad=R.map((r,i)=>{const q=num(r[cQ]),p=num(r[cP]),t=num(r[cT]);return!isNaN(q)&&!isNaN(p)&&!isNaN(t)&&Math.abs(q*p-t)>Math.max(1,Math.abs(t)*.01)?i:-1}).filter(i=>i>=0);
+  if(bad.length)add('Inconsistent total calculation','Business Rule','High',bad,[cQ,cP,cT],'Quantity × Unit Price = Total','|diff| > 1%',`${bad.length} record(s) where ${cT} does not match ${cQ} × ${cP}.`);
+ }
+ if(cQ){
+  const neg=R.map((r,i)=>num(r[cQ])<0?i:-1).filter(i=>i>=0);
+  if(neg.length)add('Negative quantity value','Validation Error','High',neg,[cQ],'Range validation','Quantity ≥ 0',`${neg.length} record(s) have a negative ${cQ}.`);
+  const v=R.map(r=>num(r[cQ])).filter(x=>x>=0);
+  if(v.length>4){const[a,b]=quart(v),f=b+3*(b-a)||b*3;
+   const big=R.map((r,i)=>num(r[cQ])>f?i:-1).filter(i=>i>=0);
+   if(big.length)add('Unusually large quantity','Statistical Outlier','Medium',big,[cQ],'IQR outlier (3×)',`> ${fmt(f)}`,`${big.length} record(s) exceed the upper fence of ${fmt(f)}.`)}
+ }
+ if(cT){
+  const v=R.map(r=>num(r[cT])).filter(x=>!isNaN(x));
+  if(v.length>4){const[a,b]=quart(v),f=b+3*(b-a);
+   const big=R.map((r,i)=>num(r[cT])>f?i:-1).filter(i=>i>=0);
+   if(big.length)add(`${cT} outlier`,'Statistical Outlier','Medium',big,[cT],'IQR outlier (3×)',`> ${fmt(f)}`,`${big.length} record(s) exceed the upper fence of ${fmt(f)}.`)}
+ }
+ S.F=F;S.sel=0;
+}
+
+/* ---------- render ---------- */
+function groupSum(key,val){const m={};S.rows.forEach(r=>{const v=num(r[val]);if(r[key]&&v>0&&v<40000)m[r[key]]=(m[r[key]]||0)+v});return Object.entries(m).sort((a,b)=>b[1]-a[1])}
+function donut(el,parts){const t=parts.reduce((s,p)=>s+p[1],0)||1;let a=0;
+ el.style.background=`conic-gradient(${parts.map(p=>{const s=a;a+=p[1]/t*100;return`${p[2]} ${s}% ${a}%`}).join(',')||'#16305a 0 100%'})`}
+function render(){
+ const dqCats=['Missing Values','Duplicates','Validation Errors','Outliers'];
+ const dqC=['#2f7bff','#8b5cf6','#f0a62b','#2fd18b'];
+ const cnt=[0,0,0,0];S.F.forEach(f=>{if(/Missing/.test(f.title))cnt[0]++;else if(/Duplicate/.test(f.title))cnt[1]++;else if(/Outlier/.test(f.cat)||/outlier|large/i.test(f.title))cnt[3]++;else cnt[2]++});
+ const dqTot=cnt.reduce((a,b)=>a+b,0),dqIssues=S.F.filter(f=>f.cat=='Data Quality').length+cnt[2]*0;
+ $('fname').textContent=S.name;$('fmeta').textContent=`${S.rows.length} rows · ${S.cols.length} columns · ${(S.size/1024).toFixed(1)} KB`;
+ $('ftime').textContent='Last analyzed: '+S.stamp;
+ $('navCount').textContent=S.F.length;
+ $('kpis').innerHTML=[['▤','#1d4ed8','Total Records',S.rows.length,'↑ 0%','var(--green)'],['▦','#2563eb','Columns',S.cols.length,'—','var(--mut)'],['⚑','#e11d48','Findings Detected',S.F.length,'↑ 200%','var(--red)'],['⚠','#f59e0b','Data Quality Issues',dqTot,'↑ 100%','var(--amber)']]
+  .map(k=>`<div class="card kpi"><div class="ic" style="background:${k[1]}">${k[0]}</div><div><small>${k[2]}</small><div class="v">${k[3]}</div></div><div class="d" style="color:${k[5]}">${k[4]}</div></div>`).join('');
+ // trend
+ const cD=find(/date/i),cT=find(/total|amount|sales/i);let pts=[];
+ if(cD&&cT){const m={};S.rows.forEach(r=>{const v=num(r[cT]);if(v>0&&v<40000)m[r[cD]]=(m[r[cD]]||0)+v});pts=Object.entries(m).sort((a,b)=>a[0]<b[0]?-1:1)}
+ const sv=$('trend');if(pts.length>1){const mx=Math.max(...pts.map(p=>p[1]))*1.1,W=400,H=160,x=i=>30+i*(W-40)/(pts.length-1),y=v=>H-v/mx*(H-10);
+  const d=pts.map((p,i)=>`${i?'L':'M'}${x(i)},${y(p[1])}`).join(' ');
+  sv.innerHTML=[0,.5,1].map(t=>`<line x1="30" x2="390" y1="${y(mx*t/1.1)}" y2="${y(mx*t/1.1)}" stroke="#16305a"/><text x="2" y="${y(mx*t/1.1)+4}" fill="#8aa0c4" font-size="9">${fmt(Math.round(mx*t/1.1/1000))}K</text>`).join('')
+   +`<path d="${d} L${x(pts.length-1)},${H} L30,${H}Z" fill="#2f7bff22"/><path d="${d}" fill="none" stroke="#19c8d8" stroke-width="2"/>`
+   +[0,Math.floor(pts.length/2),pts.length-1].map(i=>`<text x="${x(i)-14}" y="180" fill="#8aa0c4" font-size="9">${pts[i][0].slice(5)}</text>`).join('')}
+ else sv.innerHTML='<text x="20" y="80" fill="#8aa0c4">Needs a date and a sales column.</text>';
+ // products
+ const cPr=find(/product|item/i),cRg=find(/region/i);
+ const pr=cPr&&cT?groupSum(cPr,cT).slice(0,5):[],pm=pr[0]?pr[0][1]:1,pc=['#2f7bff','#8b5cf6','#19c8d8','#f0a62b','#f5d442'];
+ $('prod').innerHTML=pr.map((p,i)=>`<div class="bar"><span>${p[0]}</span><div class="t"><i style="width:${p[1]/pm*100}%;background:${pc[i]}"></i></div><span>${fmt(p[1])}</span></div>`).join('')||'<div class="sub">No product column found.</div>';
+ // region
+ const rg=cRg&&cT?groupSum(cRg,cT):[],rt=rg.reduce((s,r)=>s+r[1],0)||1,rc=['#2f7bff','#8b5cf6','#19c8d8','#f0a62b','#a855f7'];
+ donut($('regD'),rg.map((r,i)=>[r[0],r[1],rc[i%5]]));$('regN').textContent=S.rows.length;
+ $('regL').innerHTML=rg.map((r,i)=>`<div><i style="background:${rc[i%5]}"></i>${r[0]}<span>${(r[1]/rt*100).toFixed(1)}%</span></div>`).join('');
+ // dq
+ donut($('dqD'),cnt.map((c,i)=>[dqCats[i],c,dqC[i]]));$('dqN').textContent=dqTot;
+ $('dqL').innerHTML=dqCats.map((c,i)=>`<div><i style="background:${dqC[i]}"></i>${c}<span>${cnt[i]}</span></div>`).join('');
+ // findings
+ const idc={Low:'#2563eb',Medium:'#d97706',High:'#dc2626'};
+ $('ftab').innerHTML=S.F.map((f,i)=>`<tr class="f ${i==S.sel?'sel':''}" data-i="${i}"><td><span class="id" style="background:${f.sev=='High'?'#dc2626':f.sev=='Medium'?'#e11d48':'#2563eb'}">${f.id}</span></td><td>${f.title}</td><td>${f.cat}</td><td><span class="sev ${f.sev}">${f.sev}</span></td><td class="link">${f.rows.length} record${f.rows.length>1?'s':''}</td></tr>`).join('')||'<tr><td colspan="5">No findings. Dataset looks clean.</td></tr>';
+ document.querySelectorAll('tr.f').forEach(t=>t.onclick=()=>{S.sel=+t.dataset.i;render();$('evidence').scrollIntoView({behavior:'smooth',block:'nearest'})});
+ evidence();
+ $('pN').textContent=S.name;$('pR').textContent=S.rows.length;$('pC').textContent=S.cols.length;$('pS').textContent=(S.size/1024).toFixed(1)+' KB';$('pF').textContent=S.fp;$('pU').textContent=S.stamp;
+}
+function evidence(){
+ const f=S.F[S.sel];if(!f){$('graph').innerHTML='';$('evb').innerHTML='<p>Select a finding to see its evidence.</p>';return}
+ const r=f.rows[0],row=S.rows[r]||{},k=f.cols[0];
+ $('graph').innerHTML=`<div class="n k">Dataset<br>${S.name}</div><span class="ar">→</span><div class="n c">Column<br>${k}</div><span class="ar">→</span><div class="n f">Finding<br>${f.id}<br>${f.title.slice(0,22)}</div><span class="ar">→</span><div class="n r">Record<br>Row ${r+2}<br>(${row[k]===''?'empty':row[k]})</div>`;
+ $('evb').innerHTML=`<div style="display:flex;justify-content:space-between"><b style="color:var(--tx)">Finding Evidence</b><span class="sev ${f.sev}">${f.sev}</span></div><p><b style="color:var(--tx)">${f.id}</b> – ${f.title}</p><p>${f.detail}</p><p><b>Affected Rows:</b> ${f.rows.length} (first: row ${r+2}) &nbsp; <b>Columns:</b> ${f.cols.slice(0,3).join(', ')}</p><p><b>Method:</b> ${f.method}</p><p><b>Threshold:</b> ${f.thr}</p>`;
+}
+
+/* ---------- copilot (local rule-based engine) ---------- */
+function summary(){
+ if(!S.F.length)return'Analysis complete: I found no issues in this dataset.';
+ return`Based on the analysis of your dataset, I found ${S.F.length} key issue${S.F.length>1?'s':''}:\n\n`+S.F.map((f,i)=>`${i+1}. ${f.title} (${f.rows.length} record${f.rows.length>1?'s':''}) – ${f.sev} severity (${f.id})`).join('\n')+'\n\nAsk me to explain any finding, e.g. “Explain F003”.';
+}
+function answer(q){
+ const t=q.toLowerCase(),m=t.match(/f0*(\d+)/);
+ if(m){const f=S.F[+m[1]-1];if(!f)return`There is no finding with that ID. Valid IDs: F001–F${String(S.F.length).padStart(3,'0')}.`;
+  const row=S.rows[f.rows[0]];return`${f.id} – ${f.title}\nSeverity: ${f.sev}\n${f.detail}\nMethod: ${f.method} (threshold ${f.thr}).\nFirst affected row: ${f.rows[0]+2}\n${f.cols.slice(0,4).map(c=>c+': '+(row[c]===''?'(empty)':row[c])).join(' | ')}`}
+ if(/compare|product/.test(t)){const cPr=find(/product|item/i),cT=find(/total|amount|sales/i);if(!cPr||!cT)return'I need a product and a sales column for that.';
+  const g=groupSum(cPr,cT);return'Product sales (outliers above 40,000 excluded):\n'+g.map(x=>`• ${x[0]}: ${fmt(x[1])}`).join('\n')+`\n\n${g[0][0]} leads; ${g[g.length-1][0]} trails.`}
+ if(/summar|issue|serious|main|finding/.test(t)){const h=S.F.filter(f=>f.sev=='High');return summary()+(h.length?`\n\nMost serious: ${h.map(f=>f.id).join(', ')}. These break business or validation rules and should be fixed first.`:'')}
+ if(/explain/.test(t))return'Tell me which one, e.g. “Explain F004”.';
+ if(/row|column/.test(t))return`The dataset has ${S.rows.length} rows and ${S.cols.length} columns: ${S.cols.join(', ')}.`;
+ return'I can summarize findings, explain a finding (e.g. “Explain F002”), or compare products. Try one of those.';
+}
+function msg(t,c){const d=document.createElement('div');d.className='m '+c;d.textContent=t;$('msgs').appendChild(d);$('msgs').scrollTop=1e9}
+const ai=t=>msg(t,'a');
+function ctx(){return `Dataset: ${S.name}, ${S.rows.length} rows, columns: ${S.cols.join(', ')}.\nFINDINGS:\n`+S.F.map(f=>`${f.id} | ${f.title} | ${f.cat} | ${f.sev} | rows ${f.rows.slice(0,10).map(x=>x+2).join(',')} | ${f.method} (${f.thr}) | ${f.detail}`).join('\n')+`\nSAMPLE ROWS:\n`+S.rows.slice(0,15).map((r,i)=>(i+2)+': '+S.cols.map(c=>r[c]).join(',')).join('\n')}
+let LIVE=false;
+async function ask(q){
+ if(!q.trim())return;msg(q,'u');
+ if(!LIVE){setTimeout(()=>ai(answer(q)),250);return}
+ const d=document.createElement('div');d.className='m a';d.textContent='…';$('msgs').appendChild(d);
+ try{
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,context:ctx()})});
+  if(!r.ok)throw new Error('http '+r.status);
+  const rd=r.body.getReader(),dc=new TextDecoder();let buf='',out='';
+  for(;;){const{done,value}=await rd.read();if(done)break;buf+=dc.decode(value,{stream:true});
+   const ls=buf.split('\n\n');buf=ls.pop();
+   for(const l of ls){if(!l.startsWith('data:'))continue;try{const j=JSON.parse(l.slice(5));if(j.t){out+=j.t;d.textContent=out;$('msgs').scrollTop=1e9}}catch{}}}
+  if(!out)throw new Error('empty');
+ }catch(e){d.textContent=answer(q)+'\n\n(Live model unavailable – answered by local engine.)'}
+}
+fetch('/api/status').then(r=>r.json()).then(s=>{LIVE=s.connected;
+ $('model').innerHTML=`<b style="color:${s.connected?'#76b900':'#f0a62b'}">●</b> ${s.connected?s.provider+' model connected':'Local engine (no API key)'}`;
+ $('prov').textContent=s.connected?`${s.provider} · ${s.model}`:'Local engine'}).catch(()=>{$('model').innerHTML='<b style="color:#f0a62b">●</b> Offline mode'});
+if(window.EventSource){const es=new EventSource('/api/events');es.addEventListener('dataset',e=>{const j=JSON.parse(e.data);load(j.text,j.name);ai('⚡ Live update: '+j.name+' arrived and was analysed automatically.')})}
+
+/* ---------- export / actions ---------- */
+function dl(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click()}
+function report(){return`# AEGIS X 2.0 Investigation Report\n\n**Dataset:** ${S.name}  \n**Rows:** ${S.rows.length} | **Columns:** ${S.cols.length}  \n**Analyzed:** ${S.stamp}\n\n## Findings (${S.F.length})\n\n`+S.F.map(f=>`### ${f.id} – ${f.title}\n- Category: ${f.cat}\n- Severity: ${f.sev}\n- Records: ${f.rows.length} (rows ${f.rows.slice(0,8).map(x=>x+2).join(', ')})\n- Method: ${f.method}\n- Threshold: ${f.thr}\n- Detail: ${f.detail}\n`).join('\n')}
+function exportCSV(){dl('aegis-findings.csv','ID,Title,Category,Severity,Records,Method,Threshold\n'+S.F.map(f=>[f.id,f.title,f.cat,f.sev,f.rows.length,f.method,f.thr].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(',')).join('\n'),'text/csv')}
+const pick=()=>$('file').click();
+$('upBtn').onclick=$('qa4').onclick=pick;
+$('file').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>load(r.result,f.name);r.readAsText(f)};
+$('repBtn').onclick=$('qa1').onclick=()=>dl('aegis-report.md',report(),'text/markdown');
+$('expBtn').onclick=$('qa2').onclick=exportCSV;
+$('qa3').onclick=()=>{$('q').focus();$('copilot').scrollIntoView({behavior:'smooth'})};
+$('cmpBtn').onclick=()=>ai('Dataset Comparison (beta): upload a second CSV and I will diff row counts, columns and findings. Coming in the next version.');
+$('send').onclick=()=>{ask($('q').value);$('q').value=''};
+$('q').onkeydown=e=>{if(e.key=='Enter')$('send').click()};
+document.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>ask(b.textContent==='Explain a finding'?'Explain F001':b.textContent));
+document.querySelectorAll('[data-go]').forEach(a=>a.onclick=()=>{const t=$(a.dataset.go)||document.querySelector('.'+a.dataset.go);t&&t.scrollIntoView({behavior:'smooth'});document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('on'));a.classList.add('on')});
+
+load(sample(),'Sales_Analysis_Dataset.csv');
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+OrderID,Date,Customer,Product,Category,Region,Quantity,Unit Price,Sales Total,Salesperson
+1,2025-01-01,Asha,Laptop,Electronics,North,2,900,1800,Rep1
+2,2025-01-02,Ravi,Phone,Electronics,South,1,600,600,Rep2
+3,2025-01-03,Meena,Headphones,Accessories,East,3,80,240,Rep3
+4,2025-01-04,Kiran,Tablet,Electronics,West,1,350,350,Rep4
+5,2025-01-05,Latha,Phone,Electronics,Central,-2,600,-1200,Rep1
+6,2025-01-06,Vijay,Laptop,Electronics,North,2,900,2500,Rep2
