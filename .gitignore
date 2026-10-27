@@ -1,3 +1,18 @@
+<<<<<<< HEAD
 node_modules/
 .env
 *.log
+=======
+.env
+.env.local
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.pytest_cache/
+.streamlit/secrets.toml
+uploads/
+*.csv.bak
+.DS_Store
+*.log
+>>>>>>> 8527a8843f52cd1d29f07e0fbc8c67a98bb34595

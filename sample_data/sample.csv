@@ -1,0 +1,9 @@
+id,name,category,revenue,signup_date
+1,Alice,Tech,100.0,2023-01-05
+2,Bob,Retail,150.0,2023-01-10
+3,Charlie,Tech,120.0,2023-02-01
+4,Diana,Retail,9999.0,2023-02-15
+5,Eve,Tech,,2023-03-01
+6,Frank,Retail,130.0,2023-03-05
+7,Grace,Tech,110.0,2023-03-10
+8,Heidi,Retail,140.0,2023-04-01

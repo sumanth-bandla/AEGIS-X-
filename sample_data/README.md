@@ -1,0 +1,1 @@
+Sample dataset for testing AEGIS X. Contains an obvious revenue outlier and a missing value.
