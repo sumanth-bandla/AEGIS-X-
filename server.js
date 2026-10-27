@@ -11,6 +11,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /* ---------- LLM provider selection (keys stay on the server) ---------- */
 function provider() {
+  if (process.env.OPENAI_API_KEY)
+    return { name: 'OpenAI', url: 'https://api.openai.com/v1/chat/completions',
+             key: process.env.OPENAI_API_KEY, model: process.env.OPENAI_MODEL || 'gpt-4o-mini' };
   if (process.env.NVIDIA_API_KEY)
     return { name: 'NVIDIA', url: 'https://integrate.api.nvidia.com/v1/chat/completions',
              key: process.env.NVIDIA_API_KEY, model: process.env.NVIDIA_MODEL || 'meta/llama-3.1-70b-instruct' };
@@ -23,6 +26,33 @@ function provider() {
 app.get('/api/status', (_req, res) => {
   const p = provider();
   res.json({ connected: !!p, provider: p ? p.name : 'Local engine', model: p ? p.model : 'rule-based' });
+});
+
+app.get('/api/firebase-config', (_req, res) => {
+  res.json({
+    projectId: process.env.FIREBASE_PROJECT_ID || 'aegis-x-59031',
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN || 'aegis-x-59031.firebaseapp.com',
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET || 'aegis-x-59031.firebasestorage.app',
+    apiKey: process.env.FIREBASE_API_KEY || '',
+    appId: process.env.FIREBASE_APP_ID || '',
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || ''
+  });
+});
+
+app.post('/api/save-firebase-config', (req, res) => {
+  const { apiKey, appId, messagingSenderId } = req.body || {};
+  try {
+    let envContent = fs.readFileSync(path.join(__dirname, '.env'), 'utf8');
+    if (apiKey) envContent = envContent.replace(/FIREBASE_API_KEY=.*/, `FIREBASE_API_KEY=${apiKey}`);
+    if (appId) envContent = envContent.replace(/FIREBASE_APP_ID=.*/, `FIREBASE_APP_ID=${appId}`);
+    if (messagingSenderId) envContent = envContent.replace(/FIREBASE_MESSAGING_SENDER_ID=.*/, `FIREBASE_MESSAGING_SENDER_ID=${messagingSenderId}`);
+    fs.writeFileSync(path.join(__dirname, '.env'), envContent, 'utf8');
+    process.env.FIREBASE_API_KEY = apiKey || process.env.FIREBASE_API_KEY;
+    process.env.FIREBASE_APP_ID = appId || process.env.FIREBASE_APP_ID;
+    res.json({ success: true, message: 'Firebase configuration saved' });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 /* ---------- streaming chat (OpenAI-compatible SSE passthrough) ---------- */
@@ -86,6 +116,6 @@ fs.watch(DATA_DIR, (_e, f) => {
 
 app.listen(PORT, () => {
   const p = provider();
-  console.log(`AEGIS X 2.0 running → http://localhost:${PORT}`);
+  console.log(`AEGIS X 3.0 running → http://localhost:${PORT}`);
   console.log(p ? `LLM: ${p.name} (${p.model})` : 'LLM: none configured – using local engine (add a key to .env)');
 });

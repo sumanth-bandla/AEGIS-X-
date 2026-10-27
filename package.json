@@ -1,7 +1,7 @@
 {
   "name": "aegis-x",
-  "version": "2.0.0",
-  "description": "AEGIS X 2.0 – AI Investigation Agent: upload data, find anomalies, get evidence-backed answers (NVIDIA / Nebius LLMs, live streaming).",
+  "version": "3.0.0",
+  "description": "AEGIS X 3.0 – Open AI Investigation Agent: From Raw Data to Trusted Insights",
   "main": "server.js",
   "scripts": { "start": "node server.js", "dev": "node --watch server.js" },
   "engines": { "node": ">=18" },
