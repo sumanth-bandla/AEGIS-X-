@@ -7,7 +7,8 @@ def test_profile_basic():
     p = profile_dataset(df)
     assert p.row_count == 4
     assert p.column_count == 2
-    assert p.duplicate_rows == 0
+    assert p.duplicate_row_count == 0
+    assert "x" in p.numeric_columns
 
 
 def test_profile_missing():
