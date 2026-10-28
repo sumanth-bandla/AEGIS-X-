@@ -11,6 +11,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /* ---------- LLM provider selection (keys stay on the server) ---------- */
 function provider() {
+  if (process.env.GEMINI_API_KEY)
+    return { name: 'Google Gemini', url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+             key: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || 'gemini-2.5-flash' };
   if (process.env.OPENAI_API_KEY)
     return { name: 'OpenAI', url: 'https://api.openai.com/v1/chat/completions',
              key: process.env.OPENAI_API_KEY, model: process.env.OPENAI_MODEL || 'gpt-4o-mini' };

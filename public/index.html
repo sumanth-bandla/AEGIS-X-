@@ -299,90 +299,55 @@ svg { flex-shrink: 0; }
 #login-screen.hide { opacity: 0; transform: scale(0.98); pointer-events: none; }
 
 .login-gateway-card {
-  width: 100%; max-width: 960px;
-  background: rgba(8, 22, 40, 0.88);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-light);
+  width: 100%; max-width: 440px;
+  background: rgba(10, 25, 47, 0.94);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(56, 189, 248, 0.22);
   border-radius: var(--r-xl);
-  display: grid; grid-template-columns: 1fr 1.1fr;
-  overflow: hidden;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 0 0 50px var(--cyan-glow);
+  padding: 38px 34px 30px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.12);
   position: relative;
 }
 .login-gateway-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), transparent);
-}
-
-.login-projection-chamber {
-  background: linear-gradient(145deg, #051329 0%, #071c3b 100%);
-  border-right: 1px solid var(--border);
-  padding: 36px 30px;
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: space-between; text-align: center;
-  position: relative; overflow: hidden;
-}
-.login-security-telemetry {
-  width: 100%; display: flex; justify-content: space-between;
-  font-size: 10px; font-family: var(--font-mono); color: var(--tx-muted);
-  border-bottom: 1px solid var(--border); padding-bottom: 10px;
+  content: ''; position: absolute; top: 0; left: 15%; right: 15%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
 }
 
 .login-auth-console {
-  padding: 34px 34px 28px;
-  display: flex; flex-direction: column; justify-content: space-between;
+  display: flex; flex-direction: column; width: 100%;
 }
 
 .login-input-wrap {
   position: relative; display: flex; align-items: center;
 }
 .login-input-wrap svg {
-  position: absolute; left: 12px; color: var(--tx-muted); pointer-events: none;
+  position: absolute; left: 14px; color: var(--tx-muted); pointer-events: none;
 }
-.login-input, .login-select {
+.login-input {
   width: 100%; background: var(--bg-secondary); border: 1px solid var(--border);
   color: var(--tx-primary); border-radius: var(--r-md);
-  padding: 9px 12px 9px 36px; font-size: 12px; outline: none; transition: border-color 0.2s;
+  padding: 11px 14px 11px 40px; font-size: 13px; outline: none; transition: all 0.2s;
 }
-.login-input:focus, .login-select:focus { border-color: var(--border-glow); }
+.login-input:focus { border-color: var(--cyan); box-shadow: 0 0 12px var(--cyan-glow); }
 .pass-toggle {
-  position: absolute; right: 10px; background: none; border: none;
-  color: var(--tx-muted); cursor: pointer; padding: 4px;
+  position: absolute; right: 12px; background: none; border: none;
+  color: var(--tx-muted); cursor: pointer; padding: 4px; display: flex; align-items: center;
 }
 .pass-toggle:hover { color: var(--tx-primary); }
 
-.demo-profile-btn {
-  background: var(--bg-secondary); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: 8px 6px; text-align: center;
-  cursor: pointer; transition: all 0.18s; display: flex; flex-direction: column; gap: 2px;
-}
-.demo-profile-btn:hover { border-color: var(--cyan); background: var(--bg-hover); }
-.demo-profile-btn.active { border-color: var(--border-glow); background: var(--bg-active); }
-.demo-name { font-size: 11px; font-weight: 700; color: var(--tx-primary); }
-.demo-role { font-size: 9px; color: var(--tx-muted); }
-
-/* Auth Switcher Tabs & Firebase Status */
 .auth-tabs {
   display: flex; background: var(--bg-secondary); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: 3px; gap: 4px;
+  border-radius: var(--r-md); padding: 3px; gap: 4px; margin-bottom: 20px;
 }
 .auth-tab-btn {
-  flex: 1; padding: 7px 12px; border: none; background: transparent;
-  color: var(--tx-secondary); font-size: 11px; font-weight: 700; border-radius: 6px;
+  flex: 1; padding: 8px 14px; border: none; background: transparent;
+  color: var(--tx-secondary); font-size: 12px; font-weight: 600; border-radius: 6px;
   cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 6px;
 }
 .auth-tab-btn:hover { color: var(--tx-primary); }
 .auth-tab-btn.active {
   background: var(--bg-elevated); color: var(--cyan); border: 1px solid var(--border-glow);
   box-shadow: 0 0 10px var(--cyan-glow);
-}
-.firebase-status-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 3px 9px; border-radius: 99px; font-size: 10px; font-weight: 700;
-  background: rgba(245, 158, 11, 0.12); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.28);
-}
-.firebase-status-badge.connected {
-  background: var(--success-bg); color: var(--success); border-color: rgba(16, 217, 139, 0.35);
 }
 
 /* ============================================================
@@ -1031,227 +996,100 @@ svg { flex-shrink: 0; }
 <div id="login-screen" style="display:none">
   <div class="login-gateway-card">
     
-    <!-- Left Chamber: Holographic 3D Projection Hub -->
-    <div class="login-projection-chamber" id="loginChamber">
-      <div class="login-security-telemetry">
-        <span>SECURITY: SOC-2 TYPE II</span>
-        <span style="color:var(--cyan)">ENGINE: ONLINE</span>
-        <span>LATENCY: 12ms</span>
+    <!-- Professional Brand Header -->
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;background:radial-gradient(circle,rgba(56,189,248,0.2) 0%,rgba(15,23,42,0.8) 100%);border:1px solid rgba(56,189,248,0.3);border-radius:14px;box-shadow:0 0 20px rgba(56,189,248,0.2);margin-bottom:14px">
+        <img src="/assets/logo.png" alt="AEGIS X Logo" style="width:36px;height:auto">
       </div>
+      <h2 style="font-size:22px;font-weight:700;color:var(--tx-primary);letter-spacing:0.5px;margin:0 0 4px">AEGIS X</h2>
+      <p style="font-size:12px;color:var(--tx-muted);margin:0">AI Investigation Platform</p>
+    </div>
 
-      <!-- 3D Holographic Projector Pod -->
-      <div class="holo-projection-pod" id="loginHoloPod" style="margin: 36px 0 20px;">
-        <div class="holo-beam"></div>
-        <div class="holo-stage-rings"></div>
-        <div class="holo-emblem-wrap" id="loginEmblemWrap">
-          <img src="/assets/logo.png" alt="AEGIS X 3D Hologram" class="holo-emblem-img" style="width:190px">
-          <div class="holo-scanline"></div>
-          <span class="holo-tag tag-tl">NEURAL CORE v3.0</span>
-          <span class="holo-tag tag-tr">FIPS 140-3</span>
-          <span class="holo-tag tag-br">ZERO-TRUST LOCK</span>
+    <!-- Sign In / Sign Up Tabs -->
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab-btn active" id="tabSignIn">
+        <i data-lucide="log-in" width="14" height="14"></i> Sign In
+      </button>
+      <button type="button" class="auth-tab-btn" id="tabSignUp">
+        <i data-lucide="user-plus" width="14" height="14"></i> Register
+      </button>
+    </div>
+
+    <!-- 1. SIGN IN FORM -->
+    <div id="authSignInView">
+      <form id="loginForm" style="display:flex;flex-direction:column;gap:16px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:6px">Email address</label>
+          <div class="login-input-wrap">
+            <i data-lucide="mail" width="15" height="15"></i>
+            <input type="email" id="loginEmail" class="login-input" placeholder="name@company.com" value="sumanth@aegis-x.ai" required autocomplete="username">
+          </div>
         </div>
-      </div>
 
-      <div>
-        <h2 style="font-size:22px;font-weight:800;letter-spacing:1px;background:linear-gradient(135deg,#ffffff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AEGIS X 3.0</h2>
-        <div style="font-size:11px;color:var(--tx-secondary);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px">Open AI Investigation Agent</div>
-        <p style="font-size:11px;color:var(--tx-muted);font-style:italic;margin-top:6px">"From Raw Data to Trusted Insights"</p>
-      </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <label style="font-size:12px;font-weight:600;color:var(--tx-secondary)">Password</label>
+          </div>
+          <div class="login-input-wrap">
+            <i data-lucide="lock" width="15" height="15"></i>
+            <input type="password" id="loginPass" class="login-input" placeholder="••••••••" value="aegis-security-2026" required autocomplete="current-password">
+            <button type="button" id="togglePassBtn" class="pass-toggle"><i data-lucide="eye" width="15" height="15"></i></button>
+          </div>
+        </div>
 
-      <div style="font-size:10px;font-family:var(--font-mono);color:var(--tx-muted);border-top:1px solid var(--border);width:100%;padding-top:12px;margin-top:16px">
-        <span>CLASSIFIED INVESTIGATION CONSOLE · AES-256-GCM ENCRYPTED</span>
+        <input type="hidden" id="loginOrg" value="Global Financial Intelligence">
+
+        <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width:100%;padding:12px;justify-content:center;font-size:13px;font-weight:600;border-radius:var(--r-md);margin-top:4px">
+          <i data-lucide="arrow-right" width="16" height="16"></i>
+          <span id="loginSubmitText">Sign In</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- 2. REGISTRATION FORM -->
+    <div id="authSignUpView" style="display:none">
+      <form id="registerForm" style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:6px">Full name</label>
+          <div class="login-input-wrap">
+            <i data-lucide="user" width="15" height="15"></i>
+            <input type="text" id="regName" class="login-input" placeholder="Your name" required>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:6px">Email address</label>
+          <div class="login-input-wrap">
+            <i data-lucide="mail" width="15" height="15"></i>
+            <input type="email" id="regEmail" class="login-input" placeholder="name@company.com" required autocomplete="username">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:6px">Password</label>
+          <div class="login-input-wrap">
+            <i data-lucide="lock" width="15" height="15"></i>
+            <input type="password" id="regPass" class="login-input" placeholder="At least 6 characters" required autocomplete="new-password">
+          </div>
+        </div>
+
+        <input type="hidden" id="regClearance" value="Level 4 Active">
+        <input type="hidden" id="regOrg" value="Global Financial Intelligence">
+
+        <button type="submit" class="btn btn-primary" id="regSubmitBtn" style="width:100%;padding:12px;justify-content:center;font-size:13px;font-weight:600;border-radius:var(--r-md);margin-top:4px">
+          <i data-lucide="user-check" width="16" height="16"></i>
+          <span id="regSubmitText">Create Account</span>
+        </button>
+      </form>
+
+      <div style="text-align:center;margin-top:14px;font-size:12px;color:var(--tx-muted)">
+        Already have an account? <a href="#" id="linkToSignIn" style="color:var(--cyan);font-weight:600;text-decoration:none">Sign in</a>
       </div>
     </div>
 
-    <!-- Right Console: Authentication Gateway -->
-    <div class="login-auth-console">
-      <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-          <div class="firebase-status-badge" id="loginFbBadge">
-            <span class="status-dot pulse" style="background:#f59e0b"></span>
-            <span>🔥 Firebase: aegis-x-59031</span>
-          </div>
-          <span style="font-size:10px;color:var(--tx-muted);font-family:var(--font-mono)">ZERO-TRUST GATEWAY</span>
-        </div>
-
-        <div style="margin-bottom:12px">
-          <h2 style="font-size:20px;font-weight:800;color:var(--tx-primary)">Investigator Gateway</h2>
-          <p style="font-size:12px;color:var(--tx-secondary);margin-top:2px">Sign in or register an investigator clearance on project <b style="color:var(--cyan)">aegis-x-59031</b>.</p>
-        </div>
-
-        <!-- Auth Tabs: Sign In vs Register -->
-        <div class="auth-tabs" style="margin-bottom:14px">
-          <button type="button" class="auth-tab-btn active" id="tabSignIn">
-            <i data-lucide="log-in" width="13" height="13"></i> Sign In
-          </button>
-          <button type="button" class="auth-tab-btn" id="tabSignUp">
-            <i data-lucide="user-plus" width="13" height="13"></i> Create Account / Register
-          </button>
-        </div>
-
-        <!-- 1. SIGN IN VIEW -->
-        <div id="authSignInView">
-          <!-- 1-Click Fast Access Profiles -->
-          <div style="margin: 0 0 12px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
-              <label style="font-size:10px;font-weight:700;color:var(--tx-muted);text-transform:uppercase;letter-spacing:0.8px">1-Click Fast Personas</label>
-              <span style="font-size:9px;color:var(--cyan)">Instant Login</span>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px">
-              <button type="button" class="demo-profile-btn active" id="demoUser1">
-                <span class="demo-name">Sumanth</span>
-                <span class="demo-role">Lead Auditor (L4)</span>
-              </button>
-              <button type="button" class="demo-profile-btn" id="demoUser2">
-                <span class="demo-name">Dr. Vance</span>
-                <span class="demo-role">Data Scientist (L3)</span>
-              </button>
-              <button type="button" class="demo-profile-btn" id="demoUser3">
-                <span class="demo-name">Guest</span>
-                <span class="demo-role">Audit Viewer (L1)</span>
-              </button>
-            </div>
-          </div>
-
-          <form id="loginForm" style="display:flex;flex-direction:column;gap:10px">
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:3px">Investigator Email / Security ID</label>
-              <div class="login-input-wrap">
-                <i data-lucide="mail" width="14" height="14"></i>
-                <input type="email" id="loginEmail" class="login-input" value="sumanth@aegis-x.ai" required autocomplete="username">
-              </div>
-            </div>
-
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-                <label style="font-size:11px;font-weight:600;color:var(--tx-secondary)">Security Token / Password</label>
-                <span style="font-size:11px;color:var(--cyan);cursor:pointer" onclick="showToast('Active security token verified.','info')">Active Token</span>
-              </div>
-              <div class="login-input-wrap">
-                <i data-lucide="key" width="14" height="14"></i>
-                <input type="password" id="loginPass" class="login-input" value="aegis-security-2026" required autocomplete="current-password">
-                <button type="button" id="togglePassBtn" class="pass-toggle"><i data-lucide="eye" width="14" height="14"></i></button>
-              </div>
-            </div>
-
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:3px">Organization Workspace</label>
-              <div class="login-input-wrap">
-                <i data-lucide="building" width="14" height="14"></i>
-                <select id="loginOrg" class="login-select">
-                  <option value="Global Financial Intelligence">AEGIS Global Financial Intelligence</option>
-                  <option value="Cyber Forensic Operations">Cyber Forensic Operations Sector</option>
-                  <option value="Executive Audit Bureau">Executive Risk & Audit Bureau</option>
-                </select>
-              </div>
-            </div>
-
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--tx-muted);margin:2px 0 2px">
-              <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-                <input type="checkbox" id="rememberMe" checked style="accent-color:var(--cyan)">
-                <span>Remember Credentials</span>
-              </label>
-              <span style="color:var(--success)">● Firebase Ready</span>
-            </div>
-
-            <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width:100%;padding:10px;justify-content:center;font-size:13px;letter-spacing:0.5px">
-              <i data-lucide="shield-check" width="16" height="16"></i>
-              <span id="loginSubmitText">Sign In & Launch Console</span>
-            </button>
-          </form>
-
-          <div style="display:flex;align-items:center;gap:10px;margin:10px 0 8px;color:var(--tx-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px">
-            <div style="flex:1;height:1px;background:var(--border)"></div>
-            <span>Enterprise Cloud SSO</span>
-            <div style="flex:1;height:1px;background:var(--border)"></div>
-          </div>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-            <button type="button" class="btn btn-secondary btn-sm" style="justify-content:center;padding:7px 4px" id="ssoGoogleBtn">
-              <i data-lucide="globe" width="13" height="13" style="color:#f59e0b"></i> Google SSO
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm" style="justify-content:center;padding:7px 4px" id="ssoOktaBtn">
-              <i data-lucide="fingerprint" width="13" height="13" style="color:var(--cyan)"></i> Okta
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm" style="justify-content:center;padding:7px 4px" id="ssoAzureBtn">
-              <i data-lucide="cpu" width="13" height="13" style="color:var(--blue)"></i> Azure AD
-            </button>
-          </div>
-        </div>
-
-        <!-- 2. SIGN UP / REGISTRATION VIEW -->
-        <div id="authSignUpView" style="display:none">
-          <form id="registerForm" style="display:flex;flex-direction:column;gap:9px">
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:3px">Full Investigator Name</label>
-              <div class="login-input-wrap">
-                <i data-lucide="user" width="14" height="14"></i>
-                <input type="text" id="regName" class="login-input" placeholder="e.g. Sumanth or Agent Rivera" required>
-              </div>
-            </div>
-
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:3px">Security Email Address</label>
-              <div class="login-input-wrap">
-                <i data-lucide="mail" width="14" height="14"></i>
-                <input type="email" id="regEmail" class="login-input" placeholder="investigator@agency.gov or .ai" required autocomplete="username">
-              </div>
-            </div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <div>
-                <label style="font-size:11px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:3px">Security Password</label>
-                <div class="login-input-wrap">
-                  <i data-lucide="lock" width="14" height="14"></i>
-                  <input type="password" id="regPass" class="login-input" placeholder="Min 6 chars" required autocomplete="new-password">
-                </div>
-              </div>
-              <div>
-                <label style="font-size:11px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:3px">Clearance Level</label>
-                <div class="login-input-wrap">
-                  <i data-lucide="award" width="14" height="14"></i>
-                  <select id="regClearance" class="login-select">
-                    <option value="Level 4 Active">L4 · Lead Auditor</option>
-                    <option value="Level 3 Active">L3 · Data Scientist</option>
-                    <option value="Level 2 Active">L2 · Senior Analyst</option>
-                    <option value="Level 1 Active">L1 · Audit Viewer</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--tx-secondary);display:block;margin-bottom:3px">Organization / Agency</label>
-              <div class="login-input-wrap">
-                <i data-lucide="shield" width="14" height="14"></i>
-                <select id="regOrg" class="login-select">
-                  <option value="Global Financial Intelligence">AEGIS Global Financial Intelligence</option>
-                  <option value="Cyber Forensic Operations">Cyber Forensic Operations Sector</option>
-                  <option value="Executive Audit Bureau">Executive Risk & Audit Bureau</option>
-                </select>
-              </div>
-            </div>
-
-            <div style="font-size:10px;color:var(--tx-muted);line-height:1.4;background:var(--bg-secondary);padding:6px 10px;border-radius:var(--r-sm);border:1px solid var(--border)">
-              🔥 Credentials registered via <b>Firebase Auth</b> and stored securely in Firestore project <span style="color:var(--cyan);font-family:var(--font-mono)">aegis-x-59031</span>.
-            </div>
-
-            <button type="submit" class="btn btn-primary" id="regSubmitBtn" style="width:100%;padding:10px;justify-content:center;font-size:13px;letter-spacing:0.5px">
-              <i data-lucide="user-plus" width="16" height="16"></i>
-              <span id="regSubmitText">Create Investigator Profile & Connect</span>
-            </button>
-          </form>
-
-          <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--tx-muted)">
-            Already have investigator clearance? <a href="#" id="linkToSignIn" style="color:var(--cyan);font-weight:600;text-decoration:none">Sign In here</a>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:12px;margin-top:14px;font-size:10px;color:var(--tx-muted)">
-        <span>SOC-2 TYPE II · FIPS 140-3</span>
-        <span>© 2026 AEGIS X SYSTEMS</span>
-      </div>
+    <!-- Clean Footer -->
+    <div style="text-align:center;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px;margin-top:22px;font-size:11px;color:var(--tx-muted)">
+      <span>Secure Data Investigation Workspace</span>
     </div>
 
   </div>
@@ -2009,87 +1847,95 @@ svg { flex-shrink: 0; }
   <!-- ======================== 10. SETTINGS PAGE ======================== -->
   <section class="page" id="page-settings">
     <div>
-      <h2 style="font-size:20px;font-weight:800;margin-bottom:4px">Platform Settings</h2>
-      <p style="color:var(--tx-secondary);font-size:12px">Configure AI models, anomaly detection sensitivities, interface themes, and rules.</p>
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:4px">Admin & Platform Settings</h2>
+      <p style="color:var(--tx-secondary);font-size:12px">Manage admin clearance, security credentials, neural intelligence engine, and import live web datasets.</p>
     </div>
 
+    <!-- 1. ADMIN USER & ROLE PROFILE -->
     <div class="settings-section">
       <div class="settings-section-header">
-        <i data-lucide="bot" width="16" height="16"></i> AI Intelligence Engine
+        <i data-lucide="shield-check" width="16" height="16"></i> Admin Profile & Clearance
       </div>
       <div class="settings-row">
         <div>
-          <div class="settings-label">Active Engine</div>
-          <div class="settings-desc">Configured server-side via .env</div>
+          <div class="settings-label">Current Administrator</div>
+          <div class="settings-desc">Authenticated investigator clearance profile</div>
         </div>
-        <div style="font-family:var(--font-mono);color:var(--cyan)" id="settingsProvider">OpenAI (gpt-4o-mini)</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="user-avatar" id="settingAdminAvatar" style="width:34px;height:34px;font-size:13px">S</div>
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--tx-primary)" id="settingAdminName">Sumanth</div>
+            <div style="font-size:11px;color:var(--tx-muted)" id="settingAdminEmail">sumanth@aegis-x.ai</div>
+          </div>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Clearance Tier</div>
+          <div class="settings-desc">Access authorization across classified datasets & forensic tools</div>
+        </div>
+        <div>
+          <span class="nav-chip" id="settingAdminClearance" style="font-size:11px;padding:4px 8px;font-weight:700">Level 4 · Lead Administrator</span>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Assigned Organization</div>
+          <div class="settings-desc">Operating entity and audit workspace</div>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--tx-secondary)" id="settingAdminOrg">Global Financial Intelligence</div>
+      </div>
+    </div>
+
+    <!-- 2. AI INTELLIGENCE ENGINE (ADMIN RELEVANT) -->
+    <div class="settings-section">
+      <div class="settings-section-header">
+        <i data-lucide="cpu" width="16" height="16"></i> AI Intelligence Engine Status
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Active Provider</div>
+          <div class="settings-desc">Loaded server-side from .env configuration</div>
+        </div>
+        <div style="font-family:var(--font-mono);color:var(--cyan);font-weight:600" id="settingsProvider">Google Gemini (gemini-2.5-flash)</div>
       </div>
       <div class="settings-row">
         <div>
           <div class="settings-label">Model Architecture</div>
-          <div class="settings-desc">LLM parameter size and reasoning pipeline</div>
+          <div class="settings-desc">Reasoning pipeline for automated evidence auditing</div>
         </div>
-        <div style="font-family:var(--font-mono)" id="settingsModel">OpenAI gpt-4o-mini</div>
+        <div style="font-family:var(--font-mono)" id="settingsModel">gemini-2.5-flash</div>
       </div>
       <div class="settings-row">
         <div>
           <div class="settings-label">API Security</div>
-          <div class="settings-desc">Zero client-side key exposure — all inferences routed through Node.js proxy</div>
+          <div class="settings-desc">Zero client-side key exposure — all inferences routed via server proxy</div>
         </div>
-        <div style="color:var(--success);font-weight:600">🔒 Server-side Protected</div>
+        <div style="color:var(--success);font-weight:600;font-size:12px">🔒 Server-side Protected</div>
       </div>
     </div>
 
-    <!-- Firebase Cloud Suite Section -->
+    <!-- 3. CLOUD FIREBASE SYNC (ADMIN RELEVANT) -->
     <div class="settings-section" style="border-color:rgba(245,158,11,0.25)">
       <div class="settings-section-header" style="color:#f59e0b">
-        <i data-lucide="flame" width="16" height="16"></i> Firebase Cloud Suite (aegis-x-59031)
+        <i data-lucide="flame" width="16" height="16"></i> Cloud Database & Firestore Sync
       </div>
-
       <div class="settings-row">
         <div>
-          <div class="settings-label">Target Firebase Project</div>
-          <div class="settings-desc">Firebase Auth, Firestore NoSQL DB & Cloud Storage</div>
+          <div class="settings-label">Firebase Project Target</div>
+          <div class="settings-desc">Firestore NoSQL DB & Cloud Storage container</div>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
           <span class="severity-badge Low" style="font-size:11px;font-family:var(--font-mono)">aegis-x-59031</span>
           <a href="https://console.firebase.google.com/project/aegis-x-59031/firestore" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="color:var(--cyan)">
-            <i data-lucide="external-link" width="12" height="12"></i> Open Console
+            <i data-lucide="external-link" width="12" height="12"></i> Console
           </a>
         </div>
       </div>
-
       <div class="settings-row">
         <div>
-          <div class="settings-label">Authentication Domain</div>
-          <div class="settings-desc">OAuth redirect & security authority</div>
-        </div>
-        <div style="font-family:var(--font-mono);font-size:12px;color:var(--tx-secondary)">aegis-x-59031.firebaseapp.com</div>
-      </div>
-
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">Cloud Storage Bucket</div>
-          <div class="settings-desc">Binary storage for exported evidence dossiers & CSVs</div>
-        </div>
-        <div style="font-family:var(--font-mono);font-size:12px;color:var(--tx-secondary)">aegis-x-59031.firebasestorage.app</div>
-      </div>
-
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">Web API Key (Optional Override)</div>
-          <div class="settings-desc">Configured server-side in .env; you can test and persist key updates here</div>
-        </div>
-        <div style="display:flex;gap:8px;max-width:320px;width:100%">
-          <input type="password" id="settingFbApiKey" placeholder="AIzaSy..." class="login-input" style="padding-left:10px;font-family:var(--font-mono)">
-          <button class="btn btn-secondary btn-sm" id="saveFbKeyBtn">Save</button>
-        </div>
-      </div>
-
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">Firestore Synchronization</div>
-          <div class="settings-desc">Real-time status of dataset & findings sync</div>
+          <div class="settings-label">Database Synchronization</div>
+          <div class="settings-desc">Push active dataset records and forensic findings to cloud</div>
         </div>
         <div style="display:flex;gap:8px">
           <button class="btn btn-secondary btn-sm" id="testFbConnBtn">
@@ -2102,75 +1948,41 @@ svg { flex-shrink: 0; }
       </div>
     </div>
 
-    <div class="settings-section">
-      <div class="settings-section-header">
-        <i data-lucide="sliders" width="16" height="16"></i> Anomaly Detection Thresholds
+    <!-- 4. WEB DATASET IMPORT (DOWN AT THE BOTTOM) -->
+    <div class="settings-section" style="border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.02)">
+      <div class="settings-section-header" style="color:var(--cyan)">
+        <i data-lucide="globe" width="16" height="16"></i> Web & Remote Dataset Import
       </div>
-      <div class="settings-row">
+      <div class="settings-row" style="flex-direction:column;align-items:stretch;gap:12px">
         <div>
-          <div class="settings-label">IQR Outlier Multiplier</div>
-          <div class="settings-desc">Defines the upper fence Q3 + (k × IQR) for statistical outliers</div>
+          <div class="settings-label">Import Dataset from Public Web URL / REST Endpoint</div>
+          <div class="settings-desc">Fetch and audit live CSV or raw tabular data directly from any web URL, GitHub raw link, or API endpoint.</div>
         </div>
-        <select class="filter-select" id="settingIqr">
-          <option value="1.5">1.5× IQR (Standard Strict)</option>
-          <option value="3.0" selected>3.0× IQR (Extreme Only)</option>
-          <option value="5.0">5.0× IQR (Severe Only)</option>
-        </select>
-      </div>
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">Business Rule Formula Tolerance</div>
-          <div class="settings-desc">Permissible variance threshold for Quantity × Price = Total</div>
+        <div style="display:flex;gap:8px;width:100%">
+          <div class="login-input-wrap" style="flex:1">
+            <i data-lucide="link" width="15" height="15"></i>
+            <input type="url" id="webImportUrl" class="login-input" placeholder="https://raw.githubusercontent.com/.../data.csv" style="padding-left:38px">
+          </div>
+          <button class="btn btn-primary btn-sm" id="fetchWebDataBtn" style="padding:0 18px">
+            <i data-lucide="download" width="14" height="14"></i> Import & Investigate
+          </button>
         </div>
-        <select class="filter-select" id="settingTolerance">
-          <option value="0.005">0.5% Tolerance</option>
-          <option value="0.01" selected>1.0% Tolerance (Default)</option>
-          <option value="0.05">5.0% Tolerance</option>
-        </select>
-      </div>
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">Missing Value Threshold</div>
-          <div class="settings-desc">Percentage of null values required to elevate finding severity to High</div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--tx-muted)">
+          <span>Quick samples:</span>
+          <button type="button" class="btn-ghost btn-sm" id="loadSampleGithubCsv" style="padding:2px 8px;font-size:11px;color:var(--cyan);border:1px dashed rgba(56,189,248,0.3)">
+            Load Sample CSV Web URL
+          </button>
         </div>
-        <select class="filter-select" id="settingMissing">
-          <option value="0.05" selected>5% Missing (Default)</option>
-          <option value="0.10">10% Missing</option>
-        </select>
       </div>
     </div>
 
-    <div class="settings-section">
-      <div class="settings-section-header">
-        <i data-lucide="palette" width="16" height="16"></i> Interface & Accent Theme
-      </div>
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">Theme Accent Color</div>
-          <div class="settings-desc">Dynamic neon styling for gauges, borders, and brand accents</div>
-        </div>
-        <div class="theme-picker-row">
-          <div class="theme-dot-btn active" style="background:#00d4e8" data-theme="cyan" title="AEGIS Cyan"></div>
-          <div class="theme-dot-btn" style="background:#2b7fff" data-theme="blue" title="Electric Blue"></div>
-          <div class="theme-dot-btn" style="background:#a855f7" data-theme="purple" title="Neon Purple"></div>
-          <div class="theme-dot-btn" style="background:#10d98b" data-theme="green" title="Cyber Emerald"></div>
-        </div>
-      </div>
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">Compact Density Mode</div>
-          <div class="settings-desc">Reduce table padding to view more records on screen</div>
-        </div>
-        <input type="checkbox" id="settingCompact" style="width:18px;height:18px;accent-color:var(--cyan);cursor:pointer">
-      </div>
-    </div>
-
-    <div class="card" style="display:flex;justify-content:space-between;align-items:center">
+    <!-- System Reset -->
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
       <div>
-        <h4 style="font-size:13px;font-weight:700">Restore System Defaults</h4>
-        <p style="font-size:11px;color:var(--tx-muted)">Re-load original sample dataset and reset all audit preferences</p>
+        <h4 style="font-size:13px;font-weight:700">Restore Default State</h4>
+        <p style="font-size:11px;color:var(--tx-muted)">Re-load original baseline dataset and reset cached settings</p>
       </div>
-      <button class="btn btn-secondary btn-sm" id="resetSystemBtn">Reset Everything</button>
+      <button class="btn btn-secondary btn-sm" id="resetSystemBtn">Reset System</button>
     </div>
   </section>
 
@@ -3074,10 +2886,11 @@ async function ask(q, targetMsgs) {
   const typingWrap = document.createElement('div');
   const label = document.createElement('div');
   label.className = 'ai-label';
-  label.innerHTML = '<i data-lucide="bot" width="12" height="12"></i> ' + (LIVE ? 'AEGIS X · OpenAI Live LLM' : 'AEGIS X Intelligence Engine');
+  const provName = $('pageProviderBadge') ? $('pageProviderBadge').textContent : 'AI';
+  label.innerHTML = '<i data-lucide="bot" width="12" height="12"></i> ' + (LIVE ? `AEGIS X · ${provName}` : 'AEGIS X Intelligence Engine');
   const bubble = document.createElement('div');
   bubble.className = 'msg-bubble ai';
-  bubble.textContent = LIVE ? 'Streaming response from OpenAI…' : 'Analyzing dataset context…';
+  bubble.textContent = LIVE ? 'Streaming neural response…' : 'Analyzing dataset context…';
   typingWrap.appendChild(label);
   typingWrap.appendChild(bubble);
   msgs.appendChild(typingWrap);
@@ -3339,26 +3152,32 @@ $('compareFileInput').addEventListener('change', e => {
 /* ============================================================
    10. SETTINGS & PREFERENCES
    ============================================================ */
-$('settingIqr').addEventListener('change', e => {
-  S.config.iqrMult = parseFloat(e.target.value);
-  analyze();
-  renderAll();
-  showToast(`IQR Multiplier updated to ${S.config.iqrMult}×`, 'info');
-});
+if ($('settingIqr')) {
+  $('settingIqr').addEventListener('change', e => {
+    S.config.iqrMult = parseFloat(e.target.value);
+    analyze();
+    renderAll();
+    showToast(`IQR Multiplier updated to ${S.config.iqrMult}×`, 'info');
+  });
+}
 
-$('settingTolerance').addEventListener('change', e => {
-  S.config.tolerance = parseFloat(e.target.value);
-  analyze();
-  renderAll();
-  showToast(`Tolerance updated to ${(S.config.tolerance * 100)}%`, 'info');
-});
+if ($('settingTolerance')) {
+  $('settingTolerance').addEventListener('change', e => {
+    S.config.tolerance = parseFloat(e.target.value);
+    analyze();
+    renderAll();
+    showToast(`Tolerance updated to ${(S.config.tolerance * 100)}%`, 'info');
+  });
+}
 
-$('settingMissing').addEventListener('change', e => {
-  S.config.missingPct = parseFloat(e.target.value);
-  analyze();
-  renderAll();
-  showToast('Missing threshold updated.', 'info');
-});
+if ($('settingMissing')) {
+  $('settingMissing').addEventListener('change', e => {
+    S.config.missingPct = parseFloat(e.target.value);
+    analyze();
+    renderAll();
+    showToast('Missing threshold updated.', 'info');
+  });
+}
 
 document.querySelectorAll('.theme-dot-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -3370,15 +3189,19 @@ document.querySelectorAll('.theme-dot-btn').forEach(btn => {
   });
 });
 
-$('settingCompact').addEventListener('change', e => {
-  document.body.classList.toggle('compact-mode', e.target.checked);
-});
+if ($('settingCompact')) {
+  $('settingCompact').addEventListener('change', e => {
+    document.body.classList.toggle('compact-mode', e.target.checked);
+  });
+}
 
-$('resetSystemBtn').addEventListener('click', () => {
-  loadData(sampleDataset('with_issues'), 'Sales_Analysis_Dataset.csv');
-  goPage('dashboard');
-  showToast('System reset to default state.', 'info');
-});
+if ($('resetSystemBtn')) {
+  $('resetSystemBtn').addEventListener('click', () => {
+    loadData(sampleDataset('with_issues'), 'Sales_Analysis_Dataset.csv');
+    goPage('dashboard');
+    showToast('System reset to default state.', 'info');
+  });
+}
 
 /* ============================================================
    FIREBASE CLOUD SUITE & AUTHENTICATION CONTROLLER (aegis-x-59031)
@@ -3502,7 +3325,7 @@ function launchConsoleSession() {
   setTimeout(() => {
     $('login-screen').style.display = 'none';
     $('app').classList.add('visible');
-    updateHeader();
+    if (typeof updateAdminProfileUI === 'function') updateAdminProfileUI();
     showToast(`Access granted. Welcome, Investigator ${S.user.name} (${S.user.clearance}).`, 'success');
   }, 400);
 }
@@ -3595,8 +3418,8 @@ $('registerForm').addEventListener('submit', async e => {
   }, 650);
 });
 
-// SSO Handlers
-$('ssoGoogleBtn').addEventListener('click', async () => {
+const ssoG = $('ssoGoogleBtn');
+if (ssoG) ssoG.addEventListener('click', async () => {
   $('loginSubmitBtn').innerHTML = `<i data-lucide="loader" class="pulse" width="16" height="16"></i> <span>Connecting to Google Identity…</span>`;
   if (window.lucide) lucide.createIcons();
 
@@ -3639,8 +3462,8 @@ function handleSSOLogin(providerName) {
     $('loginForm').dispatchEvent(new Event('submit'));
   }, 500);
 }
-$('ssoOktaBtn').addEventListener('click', () => handleSSOLogin('Okta'));
-$('ssoAzureBtn').addEventListener('click', () => handleSSOLogin('Azure AD'));
+if ($('ssoOktaBtn')) $('ssoOktaBtn').addEventListener('click', () => handleSSOLogin('Okta'));
+if ($('ssoAzureBtn')) $('ssoAzureBtn').addEventListener('click', () => handleSSOLogin('Azure AD'));
 
 // User dropdown toggle
 $('userMenuBtn').addEventListener('click', e => {
@@ -3708,6 +3531,67 @@ async function syncDatasetToFirestore() {
   }
 }
 
+// Sync Admin Profile in Settings UI
+function updateAdminProfileUI() {
+  if (!S.user) return;
+  const name = S.user.name || 'Administrator';
+  if ($('settingAdminName')) $('settingAdminName').textContent = name;
+  if ($('settingAdminAvatar')) $('settingAdminAvatar').textContent = name.charAt(0).toUpperCase();
+  if ($('settingAdminEmail')) $('settingAdminEmail').textContent = S.user.email || 'admin@aegis-x.ai';
+  if ($('settingAdminClearance')) $('settingAdminClearance').textContent = S.user.clearance || 'Level 4 · Lead Administrator';
+  if ($('settingAdminOrg')) $('settingAdminOrg').textContent = S.user.org || 'Global Financial Intelligence';
+
+  if ($('hdrUserName')) $('hdrUserName').textContent = name;
+  if ($('hdrUserAvatar')) $('hdrUserAvatar').textContent = name.charAt(0).toUpperCase();
+  if ($('dropUserName')) $('dropUserName').textContent = name;
+  if ($('dropUserEmail')) $('dropUserEmail').textContent = S.user.email || 'admin@aegis-x.ai';
+}
+
+// Web / Remote URL Dataset Import
+const fetchWebDataBtn = $('fetchWebDataBtn');
+if (fetchWebDataBtn) {
+  fetchWebDataBtn.addEventListener('click', async () => {
+    const url = ($('webImportUrl') ? $('webImportUrl').value : '').trim();
+    if (!url) {
+      showToast('Please enter a valid CSV web URL or API endpoint.', 'warning');
+      return;
+    }
+    fetchWebDataBtn.innerHTML = `<i data-lucide="loader" class="pulse" width="14" height="14"></i> Fetching…`;
+    if (window.lucide) lucide.createIcons();
+
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const text = await resp.text();
+      if (!text || text.length < 10) throw new Error('Received empty or invalid file data');
+
+      const urlParts = url.split('/');
+      const filename = urlParts[urlParts.length - 1].split('?')[0] || 'remote_web_dataset.csv';
+      const cleanName = filename.toLowerCase().endsWith('.csv') ? filename : filename + '.csv';
+
+      loadData(text, cleanName);
+      goPage('dashboard');
+      showToast(`Successfully imported ${cleanName} from web URL!`, 'success');
+      setTimeout(syncDatasetToFirestore, 1200);
+    } catch(err) {
+      showToast(`Failed to import web data: ${err.message}`, 'error');
+    } finally {
+      fetchWebDataBtn.innerHTML = `<i data-lucide="download" width="14" height="14"></i> Import & Investigate`;
+      if (window.lucide) lucide.createIcons();
+    }
+  });
+}
+
+const sampleGithubBtn = $('loadSampleGithubCsv');
+if (sampleGithubBtn) {
+  sampleGithubBtn.addEventListener('click', () => {
+    if ($('webImportUrl')) {
+      $('webImportUrl').value = 'https://raw.githubusercontent.com/datasets/gdp/master/data/gdp.csv';
+      showToast('Sample GDP dataset URL staged. Click "Import & Investigate" to fetch.', 'info');
+    }
+  });
+}
+
 // Settings Firebase Buttons
 const syncToFbBtn = $('syncToFbBtn');
 if (syncToFbBtn) syncToFbBtn.addEventListener('click', syncDatasetToFirestore);
@@ -3719,33 +3603,6 @@ if (testFbConnBtn) {
     setTimeout(() => {
       showToast('✓ Project aegis-x-59031 reachable. Auth & Firestore ready.', 'success');
     }, 450);
-  });
-}
-
-const saveFbKeyBtn = $('saveFbKeyBtn');
-if (saveFbKeyBtn) {
-  saveFbKeyBtn.addEventListener('click', async () => {
-    const k = $('settingFbApiKey').value.trim();
-    if (!k) {
-      showToast('Please enter a Web API Key.', 'warning');
-      return;
-    }
-    try {
-      const res = await fetch('/api/save-firebase-config', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ apiKey: k })
-      });
-      if (res.ok) {
-        fbConfig.apiKey = k;
-        initFirebase();
-        showToast('Firebase Web API Key saved to server .env!', 'success');
-      } else {
-        showToast('Error saving Firebase key.', 'error');
-      }
-    } catch(err) {
-      showToast('Failed to contact server.', 'error');
-    }
   });
 }
 
@@ -3874,70 +3731,65 @@ async function boot() {
   const fill = $('splashFill');
   const status = $('splashStatus');
 
-  fill.style.width = '25%';
-  status.textContent = 'Calibrating holographic projector…';
-  await new Promise(r => setTimeout(r, 180));
-
-  fill.style.width = '55%';
-  status.textContent = 'Connecting to Firebase aegis-x-59031…';
-  await initFirebase();
-  await new Promise(r => setTimeout(r, 180));
-
-  fill.style.width = '75%';
-  status.textContent = 'Connecting to neural API backend…';
-
   try {
-    const res = await fetch('/api/status');
-    const st = await res.json();
-    LIVE = st.connected;
-    $('modelDot').className = LIVE ? 'model-dot live' : 'model-dot';
-    $('modelLabel').textContent = LIVE ? `${st.provider} · ${st.model}` : 'Local Engine';
-    $('provBadge').textContent = LIVE ? `${st.provider} (${st.model})` : 'Local Engine';
-    $('pageProviderBadge').textContent = LIVE ? `${st.provider} (${st.model})` : 'Local Engine';
-    $('settingsProvider').textContent = LIVE ? `${st.provider} (${st.model})` : 'Local Engine';
-    $('settingsModel').textContent = LIVE ? st.model : 'Deterministic';
-  } catch(e) {
-    LIVE = false;
-    $('modelLabel').textContent = 'Local Engine';
+    if (fill) fill.style.width = '35%';
+    if (status) status.textContent = 'Connecting to Firebase & Neural Backend…';
+    await initFirebase().catch(() => {});
+    await new Promise(r => setTimeout(r, 150));
+
+    if (fill) fill.style.width = '70%';
+    try {
+      const res = await fetch('/api/status');
+      const st = await res.json();
+      LIVE = st.connected;
+      if ($('modelDot')) $('modelDot').className = LIVE ? 'model-dot live' : 'model-dot';
+      if ($('modelLabel')) $('modelLabel').textContent = LIVE ? `${st.provider} · ${st.model}` : 'Local Engine';
+      if ($('provBadge')) $('provBadge').textContent = LIVE ? `${st.provider} (${st.model})` : 'Local Engine';
+      if ($('pageProviderBadge')) $('pageProviderBadge').textContent = LIVE ? `${st.provider} (${st.model})` : 'Local Engine';
+      if ($('settingsProvider')) $('settingsProvider').textContent = LIVE ? `${st.provider} (${st.model})` : 'Local Engine';
+      if ($('settingsModel')) $('settingsModel').textContent = LIVE ? st.model : 'Deterministic';
+    } catch(e) {
+      LIVE = false;
+      if ($('modelLabel')) $('modelLabel').textContent = 'Local Engine';
+    }
+
+    if (fill) fill.style.width = '100%';
+    if (status) status.textContent = 'Security handshake verified.';
+    await new Promise(r => setTimeout(r, 180));
+  } catch (err) {
+    console.warn('Boot warning:', err);
   }
 
-  fill.style.width = '90%';
-  status.textContent = 'Staging classified datasets & Firestore sync…';
-  await new Promise(r => setTimeout(r, 200));
-
-  fill.style.width = '100%';
-  status.textContent = 'Security handshake verified.';
-  await new Promise(r => setTimeout(r, 220));
-
   const splash = $('splash');
-  splash.classList.add('hide');
+  if (splash) {
+    splash.classList.add('hide');
+    setTimeout(() => {
+      splash.style.display = 'none';
 
-  setTimeout(() => {
-    splash.style.display = 'none';
+      const savedUser = sessionStorage.getItem('aegis_user');
+      const isAuthed = sessionStorage.getItem('aegis_session_active');
 
-    // Check if session exists in sessionStorage
-    const savedUser = sessionStorage.getItem('aegis_user');
-    const isAuthed = sessionStorage.getItem('aegis_session_active');
+      if (savedUser) {
+        try { S.user = JSON.parse(savedUser); } catch(e){}
+      }
 
-    if (savedUser) {
-      try { S.user = JSON.parse(savedUser); } catch(e){}
-    }
+      if (isAuthed === 'true') {
+        $('app').classList.add('visible');
+        if (typeof updateAdminProfileUI === 'function') updateAdminProfileUI();
+        loadData(sampleDataset('with_issues'), 'Sales_Analysis_Dataset.csv');
+        initComparisonData();
+        aiMsg(summary(), 'ai', $('msgs'));
+        aiMsg(summary(), 'ai', $('pageMsgs'));
+      } else {
+        $('login-screen').style.display = 'flex';
+        $('login-screen').classList.remove('hide');
+        loadData(sampleDataset('with_issues'), 'Sales_Analysis_Dataset.csv');
+        initComparisonData();
+      }
 
-    if (isAuthed === 'true') {
-      $('app').classList.add('visible');
-      loadData(sampleDataset('with_issues'), 'Sales_Analysis_Dataset.csv');
-      initComparisonData();
-      aiMsg(summary(), 'ai', $('msgs'));
-      aiMsg(summary(), 'ai', $('pageMsgs'));
-    } else {
-      $('login-screen').style.display = 'flex';
-      $('login-screen').classList.remove('hide');
-      loadData(sampleDataset('with_issues'), 'Sales_Analysis_Dataset.csv');
-      initComparisonData();
-    }
-
-    if (window.lucide) lucide.createIcons();
-  }, 450);
+      if (window.lucide) lucide.createIcons();
+    }, 350);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', boot);
