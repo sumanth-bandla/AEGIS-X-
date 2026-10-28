@@ -1,93 +1,128 @@
-<<<<<<< HEAD
-# AEGIS X 2.0 – AI Investigation Agent
+# AEGIS X 3.0 — Open AI Data Investigation Agent
 
-Upload a CSV, get evidence-backed findings (missing values, duplicates, rule violations, outliers), and ask an LLM Copilot questions about your data – with live streaming answers.
+> **Calculate with code. Explain with AI. Verify with evidence.**  
+> *From Raw Data to Trusted Insights.*
 
-## Features
-- **Real analysis engine** – null detection, exact duplicates, Quantity × Price = Total check, negative values, IQR outliers
-- **Evidence Explorer** – every finding links to method, threshold and affected rows
-- **AI Copilot** – streams answers from **NVIDIA NIM** or **Nebius AI Studio** (keys stay on the server); falls back to a local rule engine with no key
-- **Real-time feed** – drop a `.csv` into `./data` and every open browser analyses it instantly (Server-Sent Events)
-- **Exports** – findings CSV and Markdown report
+---
 
-## Run
+## Overview
+
+**AEGIS X 3.0** is an enterprise-grade, AI-assisted data investigation and forensic platform. Upload any structured dataset (CSV or web endpoint) to instantly profile schemas, uncover mathematical and statistical anomalies, inspect evidence chains, and query your data through an AI Copilot grounded strictly in verified dataset context.
+
+---
+
+## Key Features
+
+- **Automated Data Quality & Forensics**:
+  - Null value detection & completeness auditing
+  - Exact row duplicate identification
+  - Business logic validation (e.g., `Quantity × Unit Price = Total`)
+  - Statistical anomaly detection via Interquartile Range (IQR) & extreme outlier fences
+  - Data Hygiene Health Score (0–100 scale)
+- **AI Investigation Copilot**:
+  - Live Server-Sent Events (SSE) streaming answers
+  - Multi-provider support: **Google Gemini** (`gemini-2.5-flash`), **OpenAI**, **NVIDIA NIM**, and **Nebius AI Studio**
+  - Context grounding: answers cite exact finding IDs (e.g., `F003`) and row indices
+  - Zero client-side API key leakage (all requests proxied server-side via Node.js)
+  - Seamless automatic fallback to a local deterministic rule-based engine when no key is set
+- **Web & Remote Dataset Ingestion**:
+  - Drag-and-drop or file upload for local `.csv` files (up to 25MB)
+  - Direct import from any public web URL, GitHub raw link, or REST API endpoint
+  - Real-time directory watching (`./data/`) with auto-broadcast to all open browser sessions
+- **Cloud Database & Firestore Sync**:
+  - Out-of-the-box support for Firebase Authentication and Google Cloud Firestore (`aegis-x-59031`)
+  - Automated persistence of investigation snapshots and audit findings
+- **Evidence Dossier & Exports**:
+  - Forensic evidence chain linking each finding to rule thresholds and offending rows
+  - Instant automated SQL remediation script generation
+  - Exportable audit findings (CSV) and executive Markdown audit reports
+
+---
+
+## Architecture & Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Runtime & Backend** | Node.js (v18+), Express.js |
+| **Frontend UI** | Modern Vanilla JavaScript, Glassmorphic CSS Design System, Lucide Icons |
+| **AI LLM Engine** | Google Gemini (`gemini-2.5-flash`), OpenAI (`gpt-4o-mini`), NVIDIA NIM, Nebius AI |
+| **Database & Cloud** | Google Cloud Firestore, Firebase Authentication |
+| **Realtime Stream** | Server-Sent Events (SSE) for both live chat streaming and directory-watching sync |
+
+---
+
+## Quick Start
+
+### 1. Clone & Install
+
 ```bash
-git clone https://github.com/sumanth-bandla/AEGIS-X.git && cd AEGIS-X
+git clone https://github.com/sumanth-bandla/AEGIS-X-.git
+cd AEGIS-X-
 npm install
-cp .env.example .env      # add NVIDIA_API_KEY and/or NEBIUS_API_KEY
-npm start                 # http://localhost:3000
-```
-Try live mode: `cp sample/Sales_Analysis_Dataset.csv data/` while the app is open.
-
-## Structure
-```
-server.js        Express API: /api/status, /api/chat (SSE stream), /api/events (live feed)
-public/index.html  Dashboard UI + analysis engine
-data/            watched folder for live datasets
-sample/          example CSV
-```
-Never commit `.env`. Rotate any key you have pasted anywhere public.
-
-## Stack
-Node 18+, Express, vanilla JS, NVIDIA NIM / Nebius (OpenAI-compatible chat API).
-=======
-# AEGIS X — Open AI Investigation Agent
-
-Verify the data. Investigate the evidence. Understand the results.
-
-AEGIS X is an AI-assisted data investigation platform. Upload a CSV, get a
-data-quality and statistical overview, explore visualizations, identify unusual
-records, ask questions in natural language, and generate a report with findings,
-supporting calculations, limitations, and evidence references.
-
-Core principle: **Calculate with code. Explain with AI. Verify with evidence.**
-
-## Features
-
-- CSV upload with validation, size limits, encoding handling, duplicate-column detection
-- Dataset profiling: types, missingness, duplicates, numeric/categorical summaries, date ranges, quality issues
-- Exploratory visualizations: histograms, bars, scatter, box, correlation heatmap, time series (Plotly)
-- Interpretable anomaly detection: IQR, Z-score, missingness rules
-- Evidence/provenance engine: every finding traceable to calculation or record
-- AI investigation assistant (NVIDIA via Nebius, OpenAI-compatible) grounded in calculated evidence
-- Report generation (Markdown + CSV findings)
-- Works without an AI key (deterministic analysis only)
-
-## Setup
-
-```powershell
-cd aegis-x
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-copy .env.example .env
-# edit .env with your key
-streamlit run app.py
 ```
 
-## AI configuration
+### 2. Configure Environment
 
-Set `NEBIUS_API_KEY` (preferred) or `OPENAI_API_KEY` in `.env`. Base URL and
-model are configurable. The app degrades gracefully when no key is present.
+Create your `.env` file from the provided example:
 
-## Tests
-
-```powershell
-pytest -q
+```bash
+cp .env.example .env
 ```
 
-## Deployment
+Add your preferred AI provider key:
 
-Streamlit Community Cloud: point to `app.py`, add secrets via the dashboard.
+```env
+PORT=3000
 
-## Known limitations
+# Google Gemini AI (Recommended)
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-2.5-flash
 
-- In-memory only; no persistence.
-- Row references tied to current dataset version.
-- Anomalies are unusual, not proof of error/fraud.
-- AI explanations are grounded but probabilistic.
+# Firebase Project Configuration (Optional)
+FIREBASE_PROJECT_ID=aegis-x-59031
+FIREBASE_AUTH_DOMAIN=aegis-x-59031.firebaseapp.com
+FIREBASE_STORAGE_BUCKET=aegis-x-59031.firebasestorage.app
+```
+
+> **Note:** If no AI key is configured, AEGIS X automatically operates using its built-in local deterministic intelligence engine with zero setup required.
+
+### 3. Launch the Application
+
+```bash
+npm start
+```
+
+Open your browser at **[http://localhost:3000](http://localhost:3000)**.
+
+---
+
+## Project Structure
+
+```text
+AEGIS-X/
+├── server.js               # Express API: /api/chat (SSE), /api/status, /api/events
+├── package.json            # Node project dependencies and start scripts
+├── .env.example            # Environment variables template
+├── .gitignore              # Git ignore rules (protects credentials)
+├── public/
+│   ├── index.html          # Unified dashboard, copilot interface & forensic engine
+│   └── assets/             # Branding emblems and icons
+├── data/                   # Watched folder for live instant dataset ingestion
+├── sample/                 # Sample datasets (e.g. Sales_Analysis_Dataset.csv)
+├── services/               # Modular forensic & analytical services
+└── docs/                   # Architecture and technical documentation
+```
+
+---
+
+## Core Principles
+
+1. **Calculate with Code**: Statistical boundaries, variances, and duplicate states are calculated deterministically.
+2. **Explain with AI**: Large Language Models translate complex findings into executive summaries and action steps.
+3. **Verify with Evidence**: Every finding references specific offending rows, original values, and verification queries.
+
+---
 
 ## License
 
-MIT
->>>>>>> 8527a8843f52cd1d29f07e0fbc8c67a98bb34595
+This project is licensed under the [MIT License](LICENSE).
